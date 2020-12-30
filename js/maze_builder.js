@@ -2,7 +2,7 @@
 //GLOBALS (accessed outside of this document in other .js scripts)
 //holds the object graph of the maze
 var gridCells = [];
-var edgeCellIndicies = [];
+var edgeCellIndices = [];
 var ProcessComplete = false;
 
 //Glabal variables for this document
@@ -48,19 +48,20 @@ function BuildMaze(mazeWidth, mazeHeight, cellSize) {
 		rows[row] = cols;
 	}
 	
+	
 	//initialize collection
-	edgeCellIndicies = [];
-	//get all of the indecies of the edges
+	edgeCellIndices = [];
+	//get all of the indices of the edges
 	for (var col = 0; col < mazeWidth; col += 1) {
-		edgeCellIndicies.push(col); //top row
-		edgeCellIndicies.push(((mazeHeight - 1) * (mazeWidth)) + col); //bottom row
+		edgeCellIndices.push(col); //top row
+		edgeCellIndices.push(((mazeHeight - 1) * (mazeWidth)) + col); //bottom row
 	}
 	for (var row = 1; row < mazeHeight - 1; row += 1) {
-		edgeCellIndicies.push(row * mazeWidth); //left edge
-		edgeCellIndicies.push((row * mazeWidth) + (mazeWidth - 1)); //right edge
+		edgeCellIndices.push(row * mazeWidth); //left edge
+		edgeCellIndices.push((row * mazeWidth) + (mazeWidth - 1)); //right edge
 	}
 	//shuffle it
-	shuffle(edgeCellIndicies);
+	shuffle(edgeCellIndices);
 	
 	//iterate through the rows and columns of the grid and 
 	//create reference pointers for each cell's neighbors
@@ -94,16 +95,36 @@ function BuildMaze(mazeWidth, mazeHeight, cellSize) {
 		}
 	}
 	
-	//starting with node index 2 from gridCells, we'll generate the maze
+	//pick a random node to start the maze generation from
 	var randIdx = Math.floor(Math.random() * gridCells.length);
 	stack.push(gridCells[randIdx]);
 	previousNode = gridCells[randIdx];
-	GenerateMaze(ctx);
+	GenerateMaze(ctx, Math.floor(mazeWidth / 2));
+}
+
+//randomly selects inner nodes in the maze and breaks walls between them and neighbors to 
+//create cycles in the maze and open alternate paths to other parts of the maze
+function CreateCycles(ctx, cycleCount) {
+	for (var i = 0; i < cycleCount; i += 1) {
+		shuffle(neighborIndex);
+		var node = gridCells[Math.floor(Math.random() * gridCells.length)];
+		
+		for (var n = 0; n < neighborIndex.length; n += 1) {
+			if (node.Neighbors[neighborIndex[n]] && node.Boundaries[neighborIndex[n]]){
+				node.Boundaries[neighborIndex[n]] = false;
+				node.Neighbors[neighborIndex[n]].Boundaries[(neighborIndex[n] + 2) % 4] = false;
+				
+				node.DrawBoundaryLines(ctx);
+				node.Neighbors[neighborIndex[n]].DrawBoundaryLines(ctx);
+				break;
+			}
+		}
+	}
 }
 
 //This function generates the maze, normally the setTimout isn't needed for this because it would
 //be encapsulated in a while loop, but I want to see the maze being built
-function GenerateMaze(ctx) {
+function GenerateMaze(ctx, cycleCount) {
 	setTimeout(function() {
 		//basically while(stack.length > 0)
 		if (stack.length > 0) {
@@ -150,7 +171,7 @@ function GenerateMaze(ctx) {
 			node.HighlightCell(ctx);
 			
 			//call this method again to continue the "while"
-			GenerateMaze(ctx);
+			GenerateMaze(ctx, cycleCount);
 		} else {
 			//once we run out of neighbors to go to even with backtracking, then we've been everywhere
 			//this means that any point on the maze can be reached from any other point, and there
@@ -162,6 +183,8 @@ function GenerateMaze(ctx) {
 				gridCells[i].Visited = false;
 				gridCells[i].UnHighlightCell(ctx);
 			}
+			
+			CreateCycles(ctx, cycleCount);
 			
 			//mark the process complete (so other method invokers that use the graph can tell that
 			//generation is completed)

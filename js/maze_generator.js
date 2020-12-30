@@ -247,27 +247,21 @@ function SetStartAndEndPoints() {
 		//draw the canvas without all the highlighting
 		RedrawCanvas();
 		
-		for (var i = 0; i < edgeCellIndicies.length; i += 1) {
-			gridCells[edgeCellIndicies[i]].Start = false;
-			gridCells[edgeCellIndicies[i]].End = false;
+		//set all of the nodes to not be start or end
+		for (var i = 0; i < edgeCellIndices.length; i += 1) {
+			gridCells[edgeCellIndices[i]].Start = false;
+			gridCells[edgeCellIndices[i]].End = false;
 		}
 		
-		startNode = gridCells[edgeCellIndicies[Math.floor(Math.random() * edgeCellIndicies.length)]];
+		//set the start node
+		startNode = gridCells[edgeCellIndices[Math.floor(Math.random() * edgeCellIndices.length)]];
+		
+		//set the end node and repeat the set until it is different from the start node
 		do {
-			endNode = gridCells[edgeCellIndicies[Math.floor(Math.random() * edgeCellIndicies.length)]];
+			endNode = gridCells[edgeCellIndices[Math.floor(Math.random() * edgeCellIndices.length)]];
 		} while (endNode == startNode);
-		/*
-		//make sure there isn't already a start and end point
-		for (var i = 0; i < gridCells.length; i += 1) {
-			gridCells[i].Start = false;
-			gridCells[i].End = false;
-		}
 		
-		//pick two nodes for start and end nodes
-		startNode = gridCells[Math.floor(Math.random() * gridCells.length)];
-		endNode = gridCells[Math.floor(Math.random() * gridCells.length)];
-		
-		*/
+		//set the nodes and highlight them
 		startNode.Start = true;
 		endNode.End = true;
 		
