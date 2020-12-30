@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<style>
+		#canvas-grid {
+			border: 1px solid black;
+			display: block;
+			margin: 0px auto;
+		}
+		#controls-container label {
+			display: inline-block;
+			width: 120px;
+			background-color: #dddddd;
+		}
+		#controls-container input[type="number"] {
+			width: 50px;
+		}
+		#controls-container input[type="button"] {
+			display: inline-block;
+			width: 165px;
+		}
+		#controls-container fieldset {
+			display: inline-block;
+		}
+	</style>
+</head>
+<body>
+	<div id="controls-container">
+		<fieldset>
+			<legend>Maze Attributes</legend>
+			<label for="mazeWidth">Maze Width:</label>
+			<input name="mazeWidth" id="mazeWidthField" type="number" value="10" 
+				min="3" max="50" required /><br />
+			<label for="mazeHeight">Maze Height:</label>
+			<input name="mazeHeight" id="mazeHeightField" type="number" value="10"  
+				min="3" max="50" required /><br />
+			<label for="cellSize">Cell Side Length:</label>
+			<input name="cellSize" id="cellSizeField" type="number" value="15"  
+				min="5" max="20" required /><br />
+			<label for="searchSpeed">Search Speed</label>
+			<input name="searchSpeed" id="mazeSearchSpeed" type="number" value="20"
+				min="10" max="1000" required /><br />
+		</fieldset>
+		<fieldset>
+			<legend>Maze Controls</legend>
+			<input id="buildMazeButton" type="button" value="Build Maze" />
+			<input id="setStartEndPointsButton" type="button" value="Set Start and End Points" /><br />
+			<input id="dfsButton" type="button" value="Depth First Search" />
+			<input id="bfsButton" type="button" value="Breadth First Search" />
+		</fieldset>
+	</div>
+
+	<div id="canvas-container"></div>
+	
+	<script src="js/utils.js"></script>
+	<script src="js/maze_builder.js"></script>
+	<script src="js/maze_generator.js"></script>
+</body>
+</html>
