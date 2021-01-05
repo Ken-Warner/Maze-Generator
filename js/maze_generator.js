@@ -11,6 +11,37 @@ buildMazeButton.addEventListener('click', BuildNewMaze, false);
 var setStartEndButton = document.getElementById("setStartEndPointsButton");
 setStartEndButton.addEventListener('click', SetStartAndEndPoints, false);
 
+var cycleBiasRange = document.getElementById("cycleBiasRange");
+var cycleBiasValue = document.getElementById("cycleBiasValue");
+cycleBiasRange.oninput = function() {
+	cycleBiasValue.innerHTML = "";
+	
+	if (Number.isInteger(+cycleBiasRange.value)) {
+		cycleBiasValue.innerHTML += cycleBiasRange.value;
+		cycleBiasValue.innerHTML += ".0";
+	} else {
+		cycleBiasValue.innerHTML += cycleBiasRange.value;
+	}
+};
+
+var directionBiasRange = document.getElementById("directionBiasRange");
+var directionBiasValue = document.getElementById("directionBiasValue");
+var directionBiasAxis = document.getElementById("directionBiasAxis");
+directionBiasRange.oninput = function() {
+	directionBiasValue.innerHTML = "";
+	directionBiasAxis.innerHTML = "";
+	
+	if (directionBiasRange.value < 0) {
+		directionBiasAxis.innerHTML += "Vertical";
+		directionBiasValue.innerHTML += directionBiasRange.value * -1;
+	} else if (directionBiasRange.value > 0) {
+		directionBiasAxis.innerHTML += "Horizontal";
+		directionBiasValue.innerHTML += directionBiasRange.value;
+	} else {
+		directionBiasValue.innerHTML = directionBiasRange.value;
+	}
+}
+
 //form elements for information about maze
 var mazeWidthField = document.getElementById("mazeWidthField");
 var mazeHeightField = document.getElementById("mazeHeightField");
@@ -64,7 +95,8 @@ function BuildNewMaze() {
 	searchSpeedInMillis = Math.floor(mazeSearchSpeed.value);
 	
 	//build the maze
-	BuildMaze(widthOfMaze, heightOfMaze, sizeOfCells); //"maze_builder.js"
+	BuildMaze(widthOfMaze, heightOfMaze, sizeOfCells,
+		directionBiasRange.value, cycleBiasRange.value); //"maze_builder.js"
 }
 
 //variables shared between algorithms

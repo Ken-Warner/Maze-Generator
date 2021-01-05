@@ -12,6 +12,7 @@ var previousNodes = []; //the backtracking stack
 
 //this array is permuted to randomly access neighboring nodes of a specific node
 //in a random order
+var biasedNeighborIndices = [0, 1, 2, 3];
 var neighborIndex = [0, 1, 2, 3];
 
 //previous node in a graph traversal (so we know what to unighlight)
@@ -20,7 +21,8 @@ var previousNode;
 var goingForwardFlag = true;
 
 //this function perpares the canvas and grid before the maze is generated
-function BuildMaze(mazeWidth, mazeHeight, cellSize) {
+function BuildMaze(mazeWidth, mazeHeight, cellSize,
+					directionalBias, cycleBias) {
 	//get the container for the canvas
 	var container = document.getElementById('canvas-container');
 	container.innerHTML = "";
@@ -95,11 +97,39 @@ function BuildMaze(mazeWidth, mazeHeight, cellSize) {
 		}
 	}
 	
+	CreateBiasedNeighborIndices(directionalBias);
+	
 	//pick a random node to start the maze generation from
 	var randIdx = Math.floor(Math.random() * gridCells.length);
 	stack.push(gridCells[randIdx]);
 	previousNode = gridCells[randIdx];
-	GenerateMaze(ctx, Math.floor(mazeWidth / 2));
+	GenerateMaze(ctx, ComputeCycleCount(mazeWidth, mazeHeight, cycleBias));
+}
+
+//Creates an array that will be used to generate the maze based upon the
+//vertical or horizontal bias that the user has selected
+function CreateBiasedNeighborIndices(bias) {
+	biasedNeighborIndices = [0, 1, 2, 3];
+	if (bias > 0) {
+		//horizontal bias
+		for (var i = 0; i < bias; i += 1) {
+			biasedNeighborIndices.push(1);
+			biasedNeighborIndices.push(3);
+		}
+	} else {
+		//vertical bias
+		bias = (bias * -1);
+		for (var i = 0; i < bias; i += 1) {
+			biasedNeighborIndices.push(0);
+			biasedNeighborIndices.push(2);
+		}
+	}
+}
+
+//computes the number of cycles to generate in the maze based upon the 
+//size of the maze and the bias the user has set
+function ComputeCycleCount(mazeWidth, mazeHeight, bias) {
+	return Math.floor((bias * 2 / 100) * (mazeWidth * mazeHeight));
 }
 
 //randomly selects inner nodes in the maze and breaks walls between them and neighbors to 
@@ -146,17 +176,17 @@ function GenerateMaze(ctx, cycleCount) {
 			}
 			
 			//randomly choose a neighbor
-			shuffle(neighborIndex);
+			shuffle(biasedNeighborIndices);
 			
 			//by default we aren't going forward unless we find a node to go too
 			goingForwardFlag = false;
 			//check each neighbor of this node until we find one that we can move to
-			for (var i = 0; i < neighborIndex.length; i += 1) {
-				if (node.Neighbors[neighborIndex[i]] != null)
-					if (node.Neighbors[neighborIndex[i]].Visited == false){
-						stack.push(node.Neighbors[neighborIndex[i]]);
-						node.Boundaries[neighborIndex[i]] = false;
-						node.Neighbors[neighborIndex[i]].Boundaries[(neighborIndex[i] + 2) % 4] = false;
+			for (var i = 0; i < biasedNeighborIndices.length; i += 1) {
+				if (node.Neighbors[biasedNeighborIndices[i]] != null)
+					if (node.Neighbors[biasedNeighborIndices[i]].Visited == false){
+						stack.push(node.Neighbors[biasedNeighborIndices[i]]);
+						node.Boundaries[biasedNeighborIndices[i]] = false;
+						node.Neighbors[biasedNeighborIndices[i]].Boundaries[(biasedNeighborIndices[i] + 2) % 4] = false;
 						goingForwardFlag = true;
 						break; //we only want the first one that is successful
 					}

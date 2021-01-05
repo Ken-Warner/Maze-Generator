@@ -22,6 +22,21 @@
 		#controls-container fieldset {
 			display: inline-block;
 		}
+		#cycleBiasValue, #directionBiasOutput-container {
+			text-align: right;
+			display: inline-block;
+			width: 6em;
+		}
+		#directionBiasAxis {
+			text-align: left;
+			display: inline-block;
+			width: 3.5em;
+		}
+		#directionBiasValue {
+			text-align: right;
+			display: inline-block;
+			width: 2em;
+		}
 	</style>
 </head>
 <body>
@@ -40,6 +55,17 @@
 			<label for="searchSpeed">Search Speed</label>
 			<input name="searchSpeed" id="mazeSearchSpeed" type="number" value="20"
 				min="10" max="1000" required /><br />
+			<label for="directionBias">Directional Bias</label>
+			<input name="directionBias" id="directionBiasRange" type="range"
+				value="0" min="-10" max="10" required />
+				<span id="directionBiasOutput-container">
+					<span id="directionBiasAxis"></span>
+					<span id="directionBiasValue">0</span>
+				</span><br />
+			<label for="cycleBias">Cycle Bias</label>
+			<input name="cycleBias" id="cycleBiasRange" type="range"
+				value="0" min="0" max="10" step="0.5" required />
+				<span id="cycleBiasValue">0.0</span><br />
 		</fieldset>
 		<fieldset>
 			<legend>Maze Controls</legend>
