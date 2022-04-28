@@ -4,43 +4,47 @@
 	<link rel="stylesheet" type="text/css" href="css/layout.css" />
 </head>
 <body>
-	<div id="controls-container">
-		<fieldset>
-			<legend>Maze Attributes</legend>
-			<label for="mazeWidth">Maze Width:</label>
-			<input name="mazeWidth" id="mazeWidthField" type="number" value="10" 
-				min="3" max="50" required /><br />
-			<label for="mazeHeight">Maze Height:</label>
-			<input name="mazeHeight" id="mazeHeightField" type="number" value="10"  
-				min="3" max="50" required /><br />
-			<label for="cellSize">Cell Side Length:</label>
-			<input name="cellSize" id="cellSizeField" type="number" value="15"  
-				min="5" max="20" required /><br />
-			<label for="searchSpeed">Search Speed</label>
-			<input name="searchSpeed" id="mazeSearchSpeed" type="number" value="20"
-				min="10" max="1000" required /><br />
-			<label for="directionBias">Directional Bias</label>
-			<input name="directionBias" id="directionBiasRange" type="range"
-				value="0" min="-10" max="10" required />
-				<span id="directionBiasOutput-container">
-					<span id="directionBiasAxis"></span>
-					<span id="directionBiasValue">0</span>
-				</span><br />
-			<label for="cycleBias">Cycle Bias</label>
-			<input name="cycleBias" id="cycleBiasRange" type="range"
-				value="0" min="0" max="10" step="0.5" required />
-				<span id="cycleBiasValue">0.0</span><br />
-		</fieldset>
-		<fieldset>
-			<legend>Maze Controls</legend>
-			<input id="buildMazeButton" type="button" value="Build Maze" />
-			<input id="setStartEndPointsButton" type="button" value="Set Start and End Points" /><br />
-			<input id="dfsButton" type="button" value="Depth First Search" />
-			<input id="bfsButton" type="button" value="Breadth First Search" />
-		</fieldset>
+	<div class="grid-container">
+		<div class="grid-item grid-item-1">
+			<div id="attributes-container">
+				<label for="mazeWidth">Maze Width:</label>
+				<input name="mazeWidth" id="mazeWidthField" type="number" value="10" 
+					min="3" max="50" required /><br />
+				<label for="mazeHeight">Maze Height:</label>
+				<input name="mazeHeight" id="mazeHeightField" type="number" value="10"  
+					min="3" max="50" required /><br />
+				<label for="cellSize">Cell Side Length:</label>
+				<input name="cellSize" id="cellSizeField" type="number" value="15"  
+					min="5" max="20" required /><br />
+				<label for="searchSpeed">Search Speed</label>
+				<input name="searchSpeed" id="mazeSearchSpeed" type="number" value="20"
+					min="10" max="1000" required /><br />
+				<label for="directionBias">Directional Bias</label>
+				<input name="directionBias" id="directionBiasRange" type="range"
+					value="0" min="-10" max="10" required />
+					<span id="directionBiasOutput-container">
+						<span id="directionBiasAxis"></span>
+						<span id="directionBiasValue">0</span>
+					</span><br />
+				<label for="cycleBias">Cycle Bias</label>
+				<input name="cycleBias" id="cycleBiasRange" type="range"
+					value="0" min="0" max="10" step="0.5" required />
+					<span id="cycleBiasValue">0.0</span><br />
+			</div>
+		</div>
+		<div class="grid-item grid-item-2">
+			<div id="controls-container">
+				<button class="controls" id="buildMazeButton">Build Maze</button>
+				<button class="controls" id="setStartEndPointsButton">Set Start and End Points</button>
+				<button class="controls" id="dfsButton">Depth First Search</button>
+				<button class="controls" id="bfsButton">Breadth First Search</button>
+			</div>
+		</div>
+		<div class="grid-item grid-item-3">
+			<div id="canvas-container"></div>
+		</div>
 	</div>
-
-	<div id="canvas-container"></div>
+	
 	
 	<script src="js/utils.js"></script>
 	<script src="js/maze_builder.js"></script>
