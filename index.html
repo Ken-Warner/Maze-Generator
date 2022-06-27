@@ -5,42 +5,38 @@
 </head>
 <body>
 	<div class="grid-container">
-		<div class="grid-item grid-item-1">
-			<div id="attributes-container">
-				<label for="mazeWidth">Maze Width:</label>
-				<input name="mazeWidth" id="mazeWidthField" type="number" value="10" 
-					min="3" max="50" required /><br />
-				<label for="mazeHeight">Maze Height:</label>
-				<input name="mazeHeight" id="mazeHeightField" type="number" value="10"  
-					min="3" max="50" required /><br />
-				<label for="cellSize">Cell Side Length:</label>
-				<input name="cellSize" id="cellSizeField" type="number" value="15"  
-					min="5" max="20" required /><br />
-				<label for="searchSpeed">Search Speed</label>
-				<input name="searchSpeed" id="mazeSearchSpeed" type="number" value="20"
-					min="10" max="1000" required /><br />
-				<label for="directionBias">Directional Bias</label>
-				<input name="directionBias" id="directionBiasRange" type="range"
-					value="0" min="-10" max="10" required />
-					<span id="directionBiasOutput-container">
-						<span id="directionBiasAxis"></span>
-						<span id="directionBiasValue">0</span>
-					</span><br />
-				<label for="cycleBias">Cycle Bias</label>
-				<input name="cycleBias" id="cycleBiasRange" type="range"
-					value="0" min="0" max="10" step="0.5" required />
-					<span id="cycleBiasValue">0.0</span><br />
-			</div>
+		<div id="attributes-container">
+			<label for="mazeWidth">Maze Width:</label>
+			<input name="mazeWidth" id="mazeWidthField" type="number" value="10" 
+				min="3" max="50" required />
+			<label for="mazeHeight">Maze Height:</label>
+			<input name="mazeHeight" id="mazeHeightField" type="number" value="10"  
+				min="3" max="50" required />
+			<label for="cellSize">Cell Side Length:</label>
+			<input name="cellSize" id="cellSizeField" type="number" value="15"  
+				min="5" max="20" required />
+			<label for="searchSpeed">Search Speed</label>
+			<input name="searchSpeed" id="mazeSearchSpeed" type="number" value="20"
+				min="10" max="1000" required />
+			<label for="directionBias">Directional Bias</label>
+			<input name="directionBias" id="directionBiasRange" type="range"
+				value="0" min="-10" max="10" required />
+				<span id="directionBiasOutput-container">
+					<span id="directionBiasAxis"></span>
+					<span id="directionBiasValue">0</span>
+				</span>
+			<label for="cycleBias">Cycle Bias</label>
+			<input name="cycleBias" id="cycleBiasRange" type="range"
+				value="0" min="0" max="10" step="0.5" required />
+				<span id="cycleBiasValue">0.0</span>
 		</div>
-		<div class="grid-item grid-item-2">
-			<div id="controls-container">
-				<button class="controls" id="buildMazeButton">Build Maze</button>
-				<button class="controls" id="setStartEndPointsButton">Set Start and End Points</button>
-				<button class="controls" id="dfsButton">Depth First Search</button>
-				<button class="controls" id="bfsButton">Breadth First Search</button>
-			</div>
+		<div id="controls-container">
+			<button class="controls" id="buildMazeButton">Build Maze</button>
+			<button class="controls" id="setStartEndPointsButton">Set Start and End Points</button>
+			<button class="controls" id="dfsButton">Depth First Search</button>
+			<button class="controls" id="bfsButton">Breadth First Search</button>
 		</div>
-		<div class="grid-item grid-item-3">
+		<div id="canvas-grid-container">
 			<div id="canvas-container"></div>
 		</div>
 	</div>

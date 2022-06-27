@@ -1,74 +1,26 @@
-#canvas-grid {
-	border: 1px solid black;
-	display: block;
-	margin: 0px;
-	padding: 0px;
-}
-#canvas-container {
-	margin: 0px;
-	padding: 0px;
-	border: 0px;
+body {
+	background: linear-gradient(135deg, white, black) no-repeat fixed;
 }
 
 .grid-container {
 	display: grid;
-	grid-template-columns: 25% auto;
-	grid-template-rows: minmax(7em, auto);
-	background:rgb(226, 34, 34);
-}
-
-.grid-item-1 {
-	grid-column: 1 / 2;
-	grid-row: 2 / -1;
-}
-.grid-item-2 {
-	grid-column: 2 / -1;
-	grid-row: 1 / 2;
-}
-.grid-item-3 {
-	grid-column: 2 / -1;
-	grid-row: 2 / -1;
-	background: white;
-	display: flex;
-	justify-content: center;
-	align-items: center;
+	grid-template-columns: 20% auto;
+	grid-template-rows: minmax(4em, auto);
 }
 
 #attributes-container {
-	background-color: rgb(226, 34, 34);
+	grid-column: 1 / 2;
+	grid-row: 2 / -1;
+
 	display: flex;
 	flex-direction: column;
-}
-#attributes-container label {
-	background-color: #dddddd;
-}
-#attributes-container input[type="number"] {
-	width: 50px;
-	background: none;
-	border: none;
-	border-bottom: 3px solid black;
-}
-#controls-container fieldset {
-	display: inline-block;
-}
-#cycleBiasValue, #directionBiasOutput-container {
-	text-align: right;
-	display: inline-block;
-	width: 6em;
-}
-#directionBiasAxis {
-	text-align: left;
-	display: inline-block;
-	width: 3.5em;
-}
-#directionBiasValue {
-	text-align: right;
-	display: inline-block;
-	width: 2em;
+	gap: .25em;
 }
 
 #controls-container {
-	background-color: rgb(226, 34, 34);
+	grid-column: 1 / -1;
+	grid-row: 1 / 2;
+
 	display: flex;
 	flex-direction: horizontal;
 	flex-wrap:wrap;
@@ -76,8 +28,37 @@
 	justify-content: right;
 	gap: .25em;
 }
+
+#canvas-grid-container {
+	grid-column: 2 / -1;
+	grid-row: 2 / -1;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+#canvas-container {
+	background-color: white;
+	margin: 0px;
+	padding: 0px;
+	border: 0px;
+}
+
 button.controls {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
 	width: 10em;
-	height: 3em;
-	margin: .5em;
+	height: 4em;
+	padding: 1em;
+	margin: 0;
+
+	border-radius: 6px;
+}
+
+button.controls:hover {
+	background-color: rgb(163, 163, 254);
 }
